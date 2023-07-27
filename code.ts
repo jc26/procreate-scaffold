@@ -21,71 +21,81 @@
 // // keep running, which shows the cancel button at the bottom of the screen.
 // figma.closePlugin();
 
-let References = figma.createPage();
-let UXApproaches = figma.createPage();
-let ContentApproaches = figma.createPage();
-let UIApproaches = figma.createPage();
-let FinalUI = figma.createPage();
-let Prototype = figma.createPage();
-let Showcase = figma.createPage();
+console.log("generating pages ...");
+
+let FirstDividerPage = figma.createPage();
+let Design = figma.createPage();
+let Components = figma.createPage();
+let SecondDividerPage = figma.createPage();
+let Sandbox = figma.createPage();
+let Inspiration = figma.createPage();
+let Archive = figma.createPage();
 let Cover = figma.currentPage;
+
 let CoverFrame = figma.createFrame();
 let CoverHead = figma.createText();
 let CoverDesc = figma.createText();
 
 figma.currentPage.name = "📓 Cover";
-References.name = "🔭 References";
-UXApproaches.name = "📋 UX Approaches";
-ContentApproaches.name = "✍🏼 Content Approaches"
-UIApproaches.name = "👁 UI Approaches";
-FinalUI.name = "👍 Final UI";
-Prototype.name = "📱 Prototype";
-Showcase.name = "🖥 Showcase";
 CoverFrame.name = "Cover";
+FirstDividerPage.name = "-----";
+Design.name = "✨ Design";
+Components.name = "⚙️ Components"
+SecondDividerPage.name = "-----";
+Sandbox.name = "🛠️ Sandbox";
+Inspiration.name = "💡 Inspiration"
+Archive.name = "🗄️ Archive"
 
 
-
+CoverFrame.resize(1440, 900);
 Cover.appendChild(CoverFrame);
 figma.setFileThumbnailNodeAsync(CoverFrame);
-CoverFrame.appendChild(CoverHead);
-CoverFrame.appendChild(CoverDesc);
-CoverFrame.resize(1440, 900);
+async function importNode() {
+  let importComponent = await figma.importComponentByKeyAsync("0f7fc9167a8e2880dd0eab13eaf78641474098ba");
+  console.log(importComponent.name);
+  importComponent.createInstance()
+}
+let coverComponent = figma.importComponentByKeyAsync("0f7fc9167a8e2880dd0eab13eaf78641474098ba");
+// CoverFrame.appendChild(CoverHead);
+// CoverFrame.appendChild(CoverDesc);
+importNode();
 
-let setPosition = (node: TextNode, spacex: number, spacey: number) => { node.relativeTransform = [[1, 0, spacex], [0, 1, spacey]] };
+let setPosition = (node: TextNode | ComponentNode, spacex: number, spacey: number) => { node.relativeTransform = [[1, 0, spacex], [0, 1, spacey]] };
 
 let xCalculator = (container: FrameNode, element: TextNode) => { return ((container.width / 2) - (element.width / 2)); }
 
 let yCalculator = (container: FrameNode, element: TextNode) => { return ((container.height / 2) - (element.height / 2)); }
 
-let loadFontHead = async (name: string) => {
-  await figma.loadFontAsync({ family: "Roboto", style: "Bold" });
-  CoverHead.fontName = { family: "Roboto", style: "Bold" };
-  CoverHead.characters = name;
-  CoverHead.fontSize = 74;
-  CoverHead.textAlignHorizontal = "CENTER";
+// let loadFontHead = async (name: string) => {
+//   await figma.loadFontAsync({ family: "Roboto", style: "Bold" });
+//   CoverHead.fontName = { family: "Roboto", style: "Bold" };
+//   CoverHead.characters = name;
+//   CoverHead.fontSize = 74;
+//   CoverHead.textAlignHorizontal = "CENTER";
 
-}
+// }
 
-let loadFontDesc = async (text: string) => {
+// let loadFontDesc = async (text: string) => {
 
-  await figma.loadFontAsync({ family: "Roboto", style: "Regular" });
-  CoverDesc.fontSize = 36;
-  CoverDesc.characters = text;
-  CoverDesc.textAlignHorizontal = "CENTER";
-  layoutText();
-}
-let layoutText = () => {
-  let descX = xCalculator(CoverFrame, CoverDesc);
-  let headX = xCalculator(CoverFrame, CoverHead);
-  let headY = (yCalculator(CoverFrame, CoverHead) - 30);
-  let descY = headY + CoverHead.height + 20;
+//   await figma.loadFontAsync({ family: "Roboto", style: "Regular" });
+//   CoverDesc.fontSize = 36;
+//   CoverDesc.characters = text;
+//   CoverDesc.textAlignHorizontal = "CENTER";
+//   layoutText();
+// }
+// let layoutText = () => {
+//   let descX = xCalculator(CoverFrame, CoverDesc);
+//   let headX = xCalculator(CoverFrame, CoverHead);
+//   let headY = (yCalculator(CoverFrame, CoverHead) - 30);
+//   let descY = headY + CoverHead.height + 20;
 
-  setPosition(CoverHead, headX, headY);
-  setPosition(CoverDesc, descX, descY);
-}
+//   setPosition(CoverHead, headX, headY);
+//   setPosition(CoverDesc, descX, descY);
+//   setPosition(coverInstance, 0, 0);
+// }
 let run = async ()=>{
-await loadFontHead("Add Heading");
-await loadFontDesc("Add Description");
+// await loadFontHead("Add Heading");
+// await loadFontDesc("Add Description");
 figma.notify("Project Scafolding Done 👍")
 figma.closePlugin();
 }
