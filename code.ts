@@ -51,13 +51,12 @@ CoverFrame.resize(1440, 900);
 Cover.appendChild(CoverFrame);
 figma.setFileThumbnailNodeAsync(CoverFrame);
 async function importNode() {
-  let importComponent = await figma.importComponentByKeyAsync("0f7fc9167a8e2880dd0eab13eaf78641474098ba");
-  console.log(importComponent.name);
-  importComponent.createInstance()
+  
 }
 let coverComponent = figma.importComponentByKeyAsync("0f7fc9167a8e2880dd0eab13eaf78641474098ba");
 // CoverFrame.appendChild(CoverHead);
 // CoverFrame.appendChild(CoverDesc);
+console.log("goodbye");
 importNode();
 
 let setPosition = (node: TextNode | ComponentNode, spacex: number, spacey: number) => { node.relativeTransform = [[1, 0, spacex], [0, 1, spacey]] };
@@ -96,6 +95,10 @@ let yCalculator = (container: FrameNode, element: TextNode) => { return ((contai
 let run = async ()=>{
 // await loadFontHead("Add Heading");
 // await loadFontDesc("Add Description");
+let importComponent = await figma.importComponentByKeyAsync("0f7fc9167a8e2880dd0eab13eaf78641474098ba");
+console.log(importComponent.type);
+console.log("hello");
+importComponent.createInstance();
 figma.notify("Project Scafolding Done 👍")
 figma.closePlugin();
 }
