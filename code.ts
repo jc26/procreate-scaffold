@@ -10,8 +10,6 @@ let Archive = figma.createPage();
 let Cover = figma.currentPage;
 
 let CoverFrame = figma.createFrame();
-let CoverHead = figma.createText();
-let CoverDesc = figma.createText();
 
 figma.currentPage.name = "📓 Cover";
 CoverFrame.name = "Cover";
@@ -28,8 +26,30 @@ Cover.appendChild(CoverFrame);
 figma.setFileThumbnailNodeAsync(CoverFrame);
 
 let run = async ()=>{
-  let importComponent = await figma.importComponentByKeyAsync("0f7fc9167a8e2880dd0eab13eaf78641474098b");
-  console.log(importComponent == null);
+  // let addCoverInstance = async () => {
+  //   try {
+  //     let importComponent = await figma.importComponentByKeyAsync("0f7fc9167a8e2880dd0eab13eaf78641474098ba");
+  //     let coverInstance = importComponent.createInstance();
+  //     CoverFrame.appendChild(coverInstance);
+  //     let authorName = figma.currentUser.name;
+  //   let today = new Date();
+  //   let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  //   let monthAndYear = monthNames[today.getMonth()] + " " + today.getFullYear().toString()
+  //   if (authorName != null) {
+  //     coverInstance.setProperties({ "Name#107:14" : authorName });
+  //   }
+  //   coverInstance.setProperties({ 
+  //     "Updated#107:13" : monthAndYear , 
+  //     "Created#107:12" : monthAndYear
+  //   });
+  //   figma.notify("Scaffolding Complete 👍")
+  //   }
+  //   catch {
+  //     figma.notify("Please make sure the 📚 Procreate.art Styles Library is enabled for your drafts.")
+  //   }
+  // }  
+  // addCoverInstance();
+  let importComponent = await figma.importComponentByKeyAsync("0f7fc9167a8e2880dd0eab13eaf78641474098ba");
   let coverInstance = importComponent.createInstance();
   CoverFrame.appendChild(coverInstance);
   let authorName = figma.currentUser.name;
@@ -43,6 +63,9 @@ let run = async ()=>{
     "Updated#107:13" : monthAndYear , 
     "Created#107:12" : monthAndYear
   });
+  const nodes: SceneNode[] = [];
+  nodes.push(CoverFrame);
+  figma.viewport.scrollAndZoomIntoView(nodes);
   figma.notify("Scaffolding Complete 👍")
   figma.closePlugin();
 }
